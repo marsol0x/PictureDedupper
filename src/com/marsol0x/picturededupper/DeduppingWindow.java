@@ -1,30 +1,37 @@
 package com.marsol0x.picturededupper;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.*;
 
 public class DeduppingWindow {
+	private GridLayout picturesLayout = new GridLayout();
+	private GridData pictureData;
+	private Group pictureGroup;
 	
-	public static Shell createShell(final Display display) {
+	public Shell createShell(final Display display, final String directoryPath) {
 		final Shell shell = new Shell(display);
 		shell.setText("Picture Dedupper");
 		
 		GridLayout gridLayout = new GridLayout(2, true);
 		shell.setLayout(gridLayout);
 		
-		Group pictureGroup =  new Group(shell, SWT.NONE);
-		GridData gridData = new GridData();
-		gridData.horizontalSpan = 2;
-		gridData.widthHint = 600;
-		pictureGroup.setLayoutData(gridData);
-		pictureGroup.setText("Are these pictures duplicates?");
-		pictureGroup.setLayout(new RowLayout());
+		this.pictureGroup =  new Group(shell, SWT.NONE);
+		this.pictureData = new GridData();
+		this.pictureData.horizontalSpan = 2;
+		this.pictureData.widthHint = 600;
+		this.pictureGroup.setLayout(this.picturesLayout);
+		this.pictureGroup.setLayoutData(this.pictureData);
+		this.pictureGroup.setText("Are these pictures duplicates?");
 		
 		Button yesButton = new Button(shell, SWT.PUSH);
-		gridData = new GridData();
+		GridData gridData = new GridData();
 		gridData.widthHint = 100;
 		gridData.horizontalAlignment = SWT.RIGHT;
 		yesButton.setLayoutData(gridData);
@@ -50,5 +57,12 @@ public class DeduppingWindow {
 		shell.open();
 		
 		return shell;
+	}
+	
+	private void startDedupping(final Shell shell, final String directoryPath) {
+		final HashMap<String, ArrayList<String>> dups = PictureDedupper.getChecksumDups(directoryPath);
+		
+		//Canvas firstImage = new Canvas(shell, )
+		
 	}
 }

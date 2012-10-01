@@ -45,9 +45,7 @@ public class IntroWindow {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.keyCode == SWT.KEYPAD_CR || e.keyCode == SWT.CR) {
-					new DeduppingWindow();
-					DeduppingWindow.createShell(display);
-					shell.setVisible(false);
+					IntroWindow.doNext(directoryPath.getText(), display, shell);
 				}
 					
 			}
@@ -80,13 +78,7 @@ public class IntroWindow {
 		nextButton.setText("Next");
 		nextButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
-				if (directoryPath.getText() != "") {
-					new DeduppingWindow();
-					DeduppingWindow.createShell(display);
-					shell.setVisible(false);
-				}
-					
-				return;
+				IntroWindow.doNext(directoryPath.getText(), display, shell);
 			}
 		});
 		
@@ -116,4 +108,14 @@ public class IntroWindow {
 		return shell;
 	}
 
+	private static void doNext(String directoryPath, Display display, Shell shell) {
+		if (directoryPath != "") {
+			DeduppingWindow dw = new DeduppingWindow();
+			dw.createShell(display, directoryPath);
+			shell.setVisible(false);			
+		}
+			
+		return;
+	}
+	
 }
